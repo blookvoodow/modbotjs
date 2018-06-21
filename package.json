@@ -9,10 +9,16 @@
   "author": "yessiree",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^4.0.0",
+    "@types/lodash": "^4.14.110",
+    "@types/node": "^10.3.4",
+    "@types/request": "^2.47.1",
+    "@types/request-promise": "^4.1.41",
     "gulp": "^3.9.1",
-    "mocha": "^3.4.2",
+    "lodash": "^4.17.10",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
     "rimraf": "^2.6.1",
     "typescript": "^2.6.2"
-  }
+  },
+  "dependencies": {}
 }

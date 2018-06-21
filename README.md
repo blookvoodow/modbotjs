@@ -1,8 +1,5 @@
 # TypeScript+CommonJs
-This repo serves as a starting template for projects that want:
-
-- TypeScript 2.3+, with strict checks
-- Targeting server side javascript using NodeJs
+This repo aims to convert https://github.com/MafiaScum-Unofficial/modbot/tree/master/donbot to JavaScript
 
 ## Setup
 Run the following commands in order:
@@ -14,8 +11,3 @@ To rebuild the app, use one of the following commands:
 
 	$ gulp compile
 	$ gulp watch
-
-To run tests, use the following command:
-
-	$ gulp compile-test
-	$ mocha ./tests

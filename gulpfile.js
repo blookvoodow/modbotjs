@@ -15,14 +15,6 @@ gulp.task('compile', function (done) {
 	});
 });
 
-gulp.task('compile-test', function (done) {
-	exec('node-tsc.cmd -p tests', (err, stdout, stderr) => {
-		console.log(stdout);
-		console.log(stderr);
-		done(err);
-	});
-});
-
 gulp.task('watch', function () {
 	gulp.watch([
 		'src/**/*.ts',

@@ -4,7 +4,8 @@
 		"outDir": "build",
 		"lib": [
 			"dom", "es2015", "es2015.promise"
-		],
+        ],
+        "types": ["node"],
 		"strict": true
 	},
 	"include": [
