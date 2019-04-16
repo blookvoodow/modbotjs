@@ -1,7 +1,7 @@
 var modbot = require('./modbot.js')
 
 var content = `
-pagetop content
+pagetop content [change this to whatever you want]
 `
 
 
@@ -46,7 +46,7 @@ function pagetopper(options) {
 }
 
 let topper = pagetopper({
-    frequency: 10,
+    frequency: 300,
     currPage: 1
 })
 
