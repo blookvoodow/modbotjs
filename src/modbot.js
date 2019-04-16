@@ -78,7 +78,7 @@ function modbot(options) {
                 attach_sig: true,
                 topic_id: t,
                 forum_id: f,
-                creation_time: Math.floor(new Date() / 1000),
+                creation_time: $('input[name=creation_time]').first().attr('value'),
                 lastclick: $('input[name=lastclick]').first().attr('value'),
                 form_token: $('input[name=form_token]').first().attr('value'),
                 topic_cur_post_id: $('input[name=topic_cur_post_id]').first().attr('value')
