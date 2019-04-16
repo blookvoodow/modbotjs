@@ -4,8 +4,8 @@
   "description": "modbot in JavaScript",
   "main": "src/main.js",
   "scripts": {
-    "test": "node --inspect-brk src/modbot.js",
-    "start": "node --inspect-brk src/main.js"
+    "test": "node src/test.js",
+    "start": "node --inspect-brk src/modbot.js"
   },
   "author": "yessiree",
   "license": "ISC",
