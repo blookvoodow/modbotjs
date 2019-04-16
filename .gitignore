@@ -1,7 +1,6 @@
 node_modules/
 typings/
 tests/**/*.js
-src/**/*.js
 build/
 package-lock.json
 .env
