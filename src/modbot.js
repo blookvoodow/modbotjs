@@ -6,7 +6,6 @@ var querystring = require('querystring')
 
 function modbot(options) {
     let {
-        username,
         threadUrl
     } = options
 
@@ -20,7 +19,7 @@ function modbot(options) {
     function login() {
         return rp.post('/ucp.php?mode=login', {
             formData: {
-                username: username,
+                username: process.env.USER,
                 password: process.env.PASSWORD,
                 login: 'Login'
             }
@@ -80,7 +79,7 @@ function modbot(options) {
                 topic_id: t,
                 forum_id: f,
                 creation_time: Math.floor(new Date() / 1000),
-                lastclick: Math.floor(new Date() / 1000) - 1,
+                lastclick: $('input[name=lastclick]').first().attr('value'),
                 form_token: $('input[name=form_token]').first().attr('value'),
                 topic_cur_post_id: $('input[name=topic_cur_post_id]').first().attr('value')
             }
@@ -93,6 +92,10 @@ function modbot(options) {
                     t
                 },
                 form
+            }).then(() => {
+                console.log('made a post')
+            }).catch(error => {
+                console.log(error)
             })
         })
     }
@@ -105,10 +108,4 @@ function modbot(options) {
     }
 }
 
-let bot = modbot({username: 'Brigand Vvulf', threadUrl: '/viewtopic.php?f=90&t=77684'})
-
-bot.login().then(() => {
-    return bot.getUserId('yessiree')
-}).then(() => {
-    bot.makePost('test')
-})
+module.exports = modbot

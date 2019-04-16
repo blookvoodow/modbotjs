@@ -4,22 +4,16 @@
   "description": "modbot in JavaScript",
   "main": "src/main.js",
   "scripts": {
-    "test": "node src/test.js",
-    "start": "node --inspect-brk src/modbot.js"
+    "test": "node --inspect-brk src/pagetopper.js",
+    "start": "node src/pagetopper.js"
   },
   "author": "yessiree",
   "license": "ISC",
   "devDependencies": {
-    "@types/lodash": "^4.14.110",
-    "@types/node": "^10.3.4",
-    "@types/request": "^2.47.1",
-    "@types/request-promise": "^4.1.41",
     "form-data": "^2.3.3",
-    "gulp": "^4.0.0",
     "lodash": "^4.17.10",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
-    "rimraf": "^2.6.1",
     "typescript": "^2.6.2"
   },
   "dependencies": {
