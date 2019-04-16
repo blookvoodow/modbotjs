@@ -1,5 +1,8 @@
 import * as request from 'request';
 import * as requestp from 'request-promise';
+import axios from 'axios';
+import * as FormData from "form-data";
+import * as qs from 'qs';
 
 
 export interface IDonBot {
@@ -29,22 +32,57 @@ export function DonBot(options: IDontBotOptions): IDonBot {
     let rp = requestp.defaults({
         baseUrl,
         timeout: 3000,
-        jar: true   
+        jar: true
     });
 
-    function init(): Promise<void> {
+    let ajax = axios.create({
+        baseURL: baseUrl,
+        timeout: 3000,
+        withCredentials: true
+    })
+
+    function init(): any {
         return Promise.resolve(rp.post('/ucp.php?mode=login', {
             formData: {
                 username,
                 password,
                 login: 'Login'
             }
-        }));
+        })).then(x => x);
+
+        let data = new FormData()
+        data.append('username', username)
+        data.append('password', password)
+        data.append('login', 'Login')
+        data.append('autologin', 'on')
+
+        // let data = {
+        //     username,
+        //     password,
+        //     login: 'Login',
+        //     autologin: 'on'
+        // } 
+
+        return ajax.post('/ucp.php?mode=login', data, { headers: data.getHeaders() })
+            .then(x => x)
     }
         
     function getUserId(_username?: string): Promise<number|void> {
         _username = _username || username;
         _username = _username.replace(' ', '+');
+
+        let data = {
+            keywords: '',
+            terms: 'all',
+            author: _username
+        }
+
+        // return ajax.get('/search.php?keywords=&terms=all&author=yessiree')
+        //     .then(response => {
+        //         console.log(response.data)
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
 
         let blueBirdProm = rp.get('/search.php', {
             useQuerystring: true,

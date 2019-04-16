@@ -2,7 +2,7 @@ import { DonBot } from './donbot';
 
 let bot = DonBot({
     username: 'yessiree',
-    password: 'YOUR SECRET KEY'
+    password: 'Bthebeginn1ng'
 });
 
 bot.init().then(() => {
