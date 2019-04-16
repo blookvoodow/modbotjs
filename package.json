@@ -1,11 +1,11 @@
 {
-  "name": "template",
+  "name": "modbod.js",
   "version": "1.0.0",
-  "description": "template for typescript projects targeting node.js",
-  "main": "build/main.js",
+  "description": "modbot in JavaScript",
+  "main": "src/main.js",
   "scripts": {
-    "test": "node --inspect-brk src/simple.js",
-    "start": "node --inspect-brk build/main.js"
+    "test": "node --inspect-brk src/modbot.js",
+    "start": "node --inspect-brk src/main.js"
   },
   "author": "yessiree",
   "license": "ISC",
@@ -15,7 +15,7 @@
     "@types/request": "^2.47.1",
     "@types/request-promise": "^4.1.41",
     "form-data": "^2.3.3",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "lodash": "^4.17.10",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
@@ -23,11 +23,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
-    "@types/qs": "^6.5.2",
-    "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.3",
-    "dotenv": "^7.0.0",
-    "formdata-node": "^1.5.1",
-    "qs": "^6.6.0"
+    "dotenv": "^7.0.0"
   }
 }
