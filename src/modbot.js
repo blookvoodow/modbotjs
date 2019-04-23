@@ -95,7 +95,7 @@ function modbot(options) {
             }).then(() => {
                 console.log('made a post')
             }).catch(error => {
-                console.log(error)
+                console.log(error.message)
             })
         })
     }

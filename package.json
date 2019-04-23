@@ -5,7 +5,8 @@
   "main": "src/main.js",
   "scripts": {
     "test": "node --inspect-brk src/pagetopper.js",
-    "start": "node src/pagetopper.js"
+    "start": "node src/pagetopper.js",
+    "mod": "node --inspect-brk src/modbot.js"
   },
   "author": "yessiree",
   "license": "ISC",

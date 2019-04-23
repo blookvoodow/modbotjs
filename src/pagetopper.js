@@ -29,8 +29,9 @@ function pagetopper(options) {
             
             if (pageOfNextPost > currPage) {
                 console.log('making a post...')
-                bot.makePost(content)
-                currPage = pageOfNextPost
+                bot.makePost(content).then(() => {
+                    currPage = pageOfNextPost
+                })
             }
         })
     }
