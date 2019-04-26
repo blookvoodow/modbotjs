@@ -1,7 +1,18 @@
-require('dotenv').config()
+var dotenv = require('dotenv')
 var requestp = require('request-promise')
 var cheerio = require('cheerio')
 var querystring = require('querystring')
+
+let config = dotenv.config()
+if (config.error) {
+    throw result.error
+}
+
+function delay(t, v) {
+    return new Promise(function(resolve) { 
+        setTimeout(resolve.bind(null, v), t)
+    })
+}
 
 
 function modbot(options) {
@@ -62,7 +73,7 @@ function modbot(options) {
         } = querystring.parse(url)
 
         // get form metadata first
-        rp.get('/posting.php', {
+        return rp.get('/posting.php', {
             useQuerystring: true,
             qs: {
                 mode: 'reply',
@@ -84,18 +95,22 @@ function modbot(options) {
                 topic_cur_post_id: $('input[name=topic_cur_post_id]').first().attr('value')
             }
         }).then(form => {
-            return rp.post('/posting.php', {
-                useQuerystring: true,
-                qs: {
-                    mode: 'reply',
-                    f,
-                    t
-                },
-                form
-            }).then(() => {
-                console.log('made a post')
-            }).catch(error => {
-                console.log(error.message)
+            // add an artificial delay to the second call since 
+            // we could get a 302 redirect if executed too fast
+            return delay(5000).then(() => {
+                return rp.post('/posting.php', {
+                    useQuerystring: true,
+                    qs: {
+                        mode: 'reply',
+                        f,
+                        t
+                    },
+                    form
+                }).then(() => {
+                    console.log('made a post')
+                }).catch(error => {
+                    console.log(error.message)
+                })
             })
         })
     }
