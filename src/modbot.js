@@ -24,17 +24,19 @@ function modbot(options) {
         baseUrl: 'https://forum.mafiascum.net/',
         timeout: 3000,
         resolveWithFullResponse: true,
-        jar: true
+        jar: true,
+        transform: response => cheerio.load(response),
+        transform2xxOnly: true
     });
 
     function login() {
         return rp.post('/ucp.php?mode=login', {
             formData: {
-                username: process.env.USER,
+                username: process.env.USERNAME,
                 password: process.env.PASSWORD,
                 login: 'Login'
             }
-        })
+        }).catch(e => console.log)
     }
 
     function getUserId(user) {
@@ -45,17 +47,109 @@ function modbot(options) {
                 terms: 'all',
                 author: user
             }
-        }).then(response => {
-            let $ = cheerio.load(response.body)
+        }).then($ => {
             let link = $('.postprofile .author a', $('.search.post').first()).attr('href')
             return link.slice(link.lastIndexOf('=')+1)
         })
     }
 
+    function getUserTopics(options) {
+        let {
+            user,
+            forumIds
+        } = options
+
+        return rp.get('/search.php', {
+            useQuerystring: true,
+            qs: {
+                keywords: '',
+                terms: 'all',
+                author: user,
+                'fid[]': forumIds,
+                sc: 0,
+                sf: 'msgonly',
+                sr: 'topics',
+                sk: 't',
+                sd: 'd',
+                st: 0,
+                ch: 100,
+                t: 0,
+                submit: 'Search'
+            },
+            qsStringifyOptions: {indices: false}
+        })
+    }
+
+    // https://forum.mafiascum.net/viewtopic.php?f=84&t=77685&user_select[]=21774&view=print&ppp=200
+    function getPostsByUser(options) {
+        let {
+            link,
+            userId
+        } = options
+        // determine if the user participated in the game
+        return rp.get(`${link}&user_select[]=${userId}&view=print&ppp=200`).then($ => {
+            let postCount = $('#page-body .post').length
+            let posts = []
+
+            // we assume if they made more than 10 posts, they were a player
+            if(postCount > 10) {
+                // remove quotes
+                $('.post blockquote').remove()
+                // convert <br/>s to line breaks \n
+                $('.post br').html('\n')
+                // get the date and content
+                $('#page-body .post').map((i, x) => {
+                    let date = $('.date strong', $(x)).text()
+                    let content = $('.content', $(x)).text()
+                    posts.push([date, content].join())
+                })
+                return posts
+            }
+        })
+    }
+
+    function getPostsFromUser(options) {
+        let {
+            user
+        } = options
+
+        return getUserTopics({
+            user,
+            // forum ids: newbie 11, 50, open 51, 52, micro 83, 84
+            forumIds: [11,50,51,52,83,84]
+        }).then($ => {
+            let links = $('a.topictitle');
+
+            [...links].filter(x => {
+                console.log($(x).siblings('a').text())
+                return $(x).siblings('a').text() !== user
+            }).map(x => $(x).attr('href').get())
+            
+
+            console.log(links)
+            return links.slice(0, 10)
+        // }).then(async links => {
+        //     let userId = await getUserId(user);
+
+        //     return Promise.all(links.map(link => {
+        //         return getPostsByUser({
+        //             link, userId
+        //         })
+        //     })).then(values => {
+        //         return values
+        //     })
+        // }).catch(e => {
+        //     console.log(e)
+        // })
+        // for each game thread
+        // check if user was a player (from archives?) and get alignment
+        // get user posts
+        // filter out only relevant game posts
+    }
+
     function getNumberOfPosts() {
-        return rp.get(threadUrl).then(response => {
+        return rp.get(threadUrl).then($ => {
             let count = 0
-            let $ = cheerio.load(response.body)
             let pagination = $('.pagination').first().text()
             let pattern = pagination.match('[0-9]+ posts')
             if(pattern) {
@@ -80,8 +174,7 @@ function modbot(options) {
                 f: f,
                 t: t
             }
-        }).then(response => {
-            let $ = cheerio.load(response.body)
+        }).then($ => {
             return {
                 // TODO: sanitize input
                 message: content,
@@ -119,6 +212,7 @@ function modbot(options) {
         login,
         getUserId,
         getNumberOfPosts,
+        getPostsFromUser,
         makePost
     }
 }

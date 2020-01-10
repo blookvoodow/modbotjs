@@ -6,7 +6,7 @@ pagetop content [change this to whatever you want]
 
 
 function pagetopper(options) {
-    let threadUrl = process.env.THREAD
+    let threadUrl = process.env.THREAD || options.threadUrl
     if (threadUrl.indexOf('https://forum.mafiascum.net') >= 0) {
         threadUrl = threadUrl.slice('https://forum.mafiascum.net'.length)
     }
@@ -36,8 +36,14 @@ function pagetopper(options) {
         })
     }
 
+    function test() {
+        bot.getNumberOfPosts().then(posts => {
+            console.log(posts)
+        })
+    }
+
     function schedule() {
-        return setInterval(pagetop, frequency * 1000)
+        return setInterval(test, frequency * 1000)
     }
 
     return {
@@ -46,11 +52,19 @@ function pagetopper(options) {
     }
 }
 
-let topper = pagetopper({
-    frequency: 300,
-    currPage: 1
-})
+// let topper = pagetopper({
+//     frequency: 15,
+//     currPage: 1,
+//     threadUrl: "viewtopic.php?f=90&t=77684"
+// })
 
-topper.init().then(() => {
-    topper.schedule()
+// topper.init().then(() => {
+//     topper.schedule()
+// })
+
+let bot = modbot({})
+bot.login().then(() => {
+    bot.getPostsFromUser({
+        user: 'Bicephalous Bob'
+    }).then(texts => console.log(texts))
 })
