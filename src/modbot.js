@@ -108,6 +108,33 @@ function modbot(options) {
         })
     }
 
+    async function parseThread(options) {
+        let {
+            threadUrl = "viewtopic.php?f=150&t=80953"
+        } = options
+
+        let postNum = await getNumberOfPosts("viewtopic.php?f=150&t=80953")
+        let posts = []
+
+        async function crawlPosts(index) {
+            let $ = await rp.get(`${threadUrl}&view=print&ppp=200&start=${index}`)
+            $('.post br').html('\n')
+
+            return $('.post').map((i,x) => {
+                let text = $('.content', $(x)).text()
+                let author = $('.author', $(x)).text()
+                return `${author}: ${text}`
+            }).get()
+        }
+
+        for(let i=0; i<postNum; i+=199) {
+            posts = posts.concat(await crawlPosts(i))
+        }
+
+        console.log(posts)
+        return posts;
+    }
+
     function getPostsFromUser(options) {
         let {
             user
@@ -128,27 +155,28 @@ function modbot(options) {
 
             console.log(links)
             return links.slice(0, 10)
-        // }).then(async links => {
-        //     let userId = await getUserId(user);
+        }).then(async links => {
+            let userId = await getUserId(user);
 
-        //     return Promise.all(links.map(link => {
-        //         return getPostsByUser({
-        //             link, userId
-        //         })
-        //     })).then(values => {
-        //         return values
-        //     })
-        // }).catch(e => {
-        //     console.log(e)
-        // })
+            return Promise.all(links.map(link => {
+                return getPostsByUser({
+                    link, userId
+                })
+            })).then(values => {
+                return values
+            })
+        }).catch(e => {
+            console.log(e)
+        })
         // for each game thread
         // check if user was a player (from archives?) and get alignment
         // get user posts
         // filter out only relevant game posts
     }
 
-    function getNumberOfPosts() {
-        return rp.get(threadUrl).then($ => {
+    function getNumberOfPosts(url) {
+        url = url || threadUrl
+        return rp.get(url).then($ => {
             let count = 0
             let pagination = $('.pagination').first().text()
             let pattern = pagination.match('[0-9]+ posts')
@@ -213,6 +241,7 @@ function modbot(options) {
         getUserId,
         getNumberOfPosts,
         getPostsFromUser,
+        parseThread,
         makePost
     }
 }

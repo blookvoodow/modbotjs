@@ -64,7 +64,5 @@ function pagetopper(options) {
 
 let bot = modbot({})
 bot.login().then(() => {
-    bot.getPostsFromUser({
-        user: 'Bicephalous Bob'
-    }).then(texts => console.log(texts))
+    bot.parseThread({})
 })
