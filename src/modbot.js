@@ -30,8 +30,8 @@ function modbot(options) {
     function login() {
         return rp.post('/ucp.php?mode=login', {
             formData: {
-                username: process.env.USER,
-                password: process.env.PASSWORD,
+                username: process.env.MAFIASCUM_USER,
+                password: process.env.MAFIASCUM_PASSWORD,
                 login: 'Login'
             }
         })

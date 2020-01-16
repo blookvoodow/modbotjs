@@ -36,21 +36,19 @@ function pagetopper(options) {
         })
     }
 
+    function test() {
+        bot.getNumberOfPosts().then(posts => console.log(posts));
+    }
+
     function schedule() {
         return setInterval(pagetop, frequency * 1000)
     }
 
     return {
         init,
+        test,
         schedule
     }
 }
 
-let topper = pagetopper({
-    frequency: 300,
-    currPage: 1
-})
-
-topper.init().then(() => {
-    topper.schedule()
-})
+module.exports = pagetopper;

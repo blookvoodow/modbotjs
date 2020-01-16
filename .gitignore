@@ -1,5 +1,4 @@
 node_modules/
 typings/
 build/
-package-lock.json
 .env

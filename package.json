@@ -2,10 +2,14 @@
   "name": "modbod.js",
   "version": "1.0.0",
   "description": "modbot in JavaScript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blookvoodow/modbotjs.git"
+  },
   "main": "src/main.js",
   "scripts": {
-    "test": "node --inspect-brk src/pagetopper.js",
-    "start": "node src/pagetopper.js",
+    "test": "node --inspect-brk src/main.js",
+    "start": "node src/main.js",
     "mod": "node --inspect-brk src/modbot.js"
   },
   "author": "yessiree",
