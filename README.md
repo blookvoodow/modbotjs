@@ -12,8 +12,8 @@ Run the following commands in order:
 
 Create an .env file with credentials: (can be any mafiascum user)
 
-	USER={MAFIASUCM_USERNAME}
-	PASSWORD={YOUR_MAFIASCUM_PASSWORD}
+	MAFIASCUM_USER={MAFIASUCM_USERNAME}
+	MAFIASCUM_PASSWORD={YOUR_MAFIASCUM_PASSWORD}
 	THREAD={URL_OF_THE_THREAD}
 
 ## Usage
