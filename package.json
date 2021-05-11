@@ -16,7 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "form-data": "^2.3.3",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.21",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
     "typescript": "^2.6.2"
