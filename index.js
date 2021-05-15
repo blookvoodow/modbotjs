@@ -1,7 +1,7 @@
 const express = require('express')
 const main = require('./src/index.js')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   const username = process.env.MAFIASCUM_USERNAME;
