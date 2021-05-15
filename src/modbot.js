@@ -1,12 +1,6 @@
-var dotenv = require('dotenv')
 var requestp = require('request-promise')
 var cheerio = require('cheerio')
 var querystring = require('querystring')
-
-let config = dotenv.config()
-if (config.error) {
-    throw result.error
-}
 
 function delay(t, v) {
     return new Promise(function(resolve) { 
@@ -21,7 +15,7 @@ function modbot(options) {
     } = options
 
     let rp = requestp.defaults({
-        baseUrl: 'https://forum.mafiascum.net/',
+        baseUrl: 'https://forum.mafiascum.net',
         timeout: 3000,
         resolveWithFullResponse: true,
         jar: true
@@ -30,8 +24,8 @@ function modbot(options) {
     function login() {
         return rp.post('/ucp.php?mode=login', {
             formData: {
-                username: process.env.MAFIASCUM_USER,
-                password: process.env.MAFIASCUM_PASSWORD,
+                username: process.env.MAFIASCUM_USERNAME,
+                password: process.env.MFAISCUM_PASSWORD,
                 login: 'Login'
             }
         })
