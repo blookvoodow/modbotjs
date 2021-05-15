@@ -20,9 +20,9 @@ async function main() {
 
     const pollUpdate = async () => {
         try {
-            const posts = await bot.getNumberOfPosts()
-            pageOfNextPost = Math.ceil((posts + 1) / pageSize)
-            console.log('total posts:', posts, 'current page:', currPage, 'page of next post:', pageOfNextPost)
+            const cposts = await bot.getNumberOfPosts()
+            pageOfNextPost = Math.ceil((cposts + 1) / pageSize)
+            console.log('total posts:', cposts, 'current page:', currPage, 'page of next post:', pageOfNextPost)
             
             if (pageOfNextPost > currPage) {
                 console.log('making a post...')
