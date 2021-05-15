@@ -25,7 +25,7 @@ function modbot(options) {
         return rp.post('/ucp.php?mode=login', {
             formData: {
                 username: process.env.MAFIASCUM_USERNAME,
-                password: process.env.MFAISCUM_PASSWORD,
+                password: process.env.MAFIASCUM_PASSWORD,
                 login: 'Login'
             }
         })

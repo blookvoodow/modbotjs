@@ -42,8 +42,4 @@ async function main() {
     id = setInterval(pollUpdate, 600000);
 }
 
-try {
-    main();
-} catch(e) {
-    clearInterval(id);
-}
+module.exports = main;
