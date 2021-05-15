@@ -39,9 +39,7 @@ async function main() {
 
     await bot.login();
     console.log('Logged in.')
-    // id = setInterval(pollUpdate, 600000);
-    const posts = await bot.getNumberOfPosts()
-    console.log(posts)
+    id = setInterval(pollUpdate, 600000);
 }
 
 try {
